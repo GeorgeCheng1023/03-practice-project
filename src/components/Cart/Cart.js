@@ -8,15 +8,15 @@ const dummy_cart = [
   {id: 'm1', name: 'Banana', amount: 4, price: 10.00},
 ]
 
-
-
 const total = dummy_cart.reduce((tol, meal) => {
   return tol + (meal.price * meal.amount)
 }, 0).toFixed(2);
 
 const Cart = props => {
   const cartContext = useContext(CartContext);
-
+  const addItemHandler = item => {
+    return (cartContext.addItem({...item, amount:1}))
+  }
   return (
     <>
       {cartContext.isDisplay && (
@@ -28,6 +28,8 @@ const Cart = props => {
                 name={item.name}
                 amount={item.amount}
                 price={item.amount}
+                item={item}
+                onAdd={addItemHandler.bind(null, item)}
               />
             )}
           </ul>
