@@ -4,14 +4,23 @@ const CartContext = React.createContext()
 
 const cartReducer = (state, action) => {
   if(action.type === 'ADD'){
-    const updateItems = state.items.concat(action.item);
     const updateTotalAmount = state.totalAmount + action.item.amount
     const updateTotalPrice = state.totalPrice + action.item.amount * action.item.price
+    let foundIndex = state.items.findIndex(item => item.id === action.item.id);
+    
+    let updateItem 
+    if(foundIndex > -1){
+      updateItem = state.items.map(item => item.id === action.item.id ? {...item, amount: item.amount + action.item.amount} : item)
+    }else{
+      updateItem = state.items.concat(action.item)
+    }
+    
     return {
-      items: updateItems,
+      items: updateItem,
       totalAmount: updateTotalAmount,
       totalPrice: updateTotalPrice,
     }
+    
   }else if(action.type === 'REMOVE'){
 
   }
@@ -37,7 +46,7 @@ export const CartContextProvider = props => {
 
   const addItemHandler = item => {
     cartDispatcher({type: 'ADD', item: item})
-    // cartState.items.forEach(item => console.log(cartState.items))
+    cartState.items.forEach(item => console.log(cartState.items))
   }
 
   const removeItemHandler = id => {
