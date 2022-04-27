@@ -7,12 +7,13 @@ const cartReducer = (state, action) => {
     const updateItems = state.items.concat(action.item);
     const updateTotalAmount = state.totalAmount + action.item.amount
     const updateTotalPrice = state.totalPrice + action.item.amount * action.item.price
-    return{
+    return {
       items: updateItems,
-      amount: updateTotalAmount,
-      price: updateTotalPrice,
+      totalAmount: updateTotalAmount,
+      totalPrice: updateTotalPrice,
     }
   }else if(action.type === 'REMOVE'){
+
   }
 }
 const initCartState = {
@@ -35,8 +36,8 @@ export const CartContextProvider = props => {
   }
 
   const addItemHandler = item => {
-    console.log(item)
     cartDispatcher({type: 'ADD', item: item})
+    // cartState.items.forEach(item => console.log(cartState.items))
   }
 
   const removeItemHandler = id => {
