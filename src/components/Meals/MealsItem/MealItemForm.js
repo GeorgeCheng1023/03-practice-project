@@ -1,4 +1,4 @@
-import {useContext, useRef, useState} from 'react'
+import {useRef} from 'react'
 import classes from './MealItemForm.module.css'
 import Input from '../../UI/Input/Input'
 const MealsForm = props => {
@@ -8,7 +8,6 @@ const MealsForm = props => {
     event.preventDefault();
     const amount = +inputRef.current.value;
     props.onAddItemToCart(amount);
-
   }
 
   return (
@@ -16,7 +15,6 @@ const MealsForm = props => {
       <Input
         ref={inputRef}
         label='Amount'
-
         input={{
           id: `amount_${meal.id}`,
           type: 'number',

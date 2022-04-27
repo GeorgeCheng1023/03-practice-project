@@ -60,7 +60,6 @@ export const CartContextProvider = props => {
 
   const addItemHandler = item => {
     cartDispatcher({type: 'ADD', item: item})
-    cartState.items.forEach(item => console.log(cartState.items))
   }
 
   const removeItemHandler = item => {
