@@ -8,21 +8,35 @@ const cartReducer = (state, action) => {
     const updateTotalPrice = state.totalPrice + action.item.amount * action.item.price
     let foundIndex = state.items.findIndex(item => item.id === action.item.id);
     
-    let updateItem 
+    let updateItems
     if(foundIndex > -1){
-      updateItem = state.items.map(item => item.id === action.item.id ? {...item, amount: item.amount + action.item.amount} : item)
+      updateItems = state.items.map(item => item.id === action.item.id ? {...item, amount: item.amount + action.item.amount} : item)
     }else{
-      updateItem = state.items.concat(action.item)
+      updateItems = state.items.concat(action.item)
     }
     
     return {
-      items: updateItem,
+      items: updateItems,
       totalAmount: updateTotalAmount,
       totalPrice: updateTotalPrice,
     }
     
   }else if(action.type === 'REMOVE'){
-
+    const updateTotalAmount = state.totalAmount - action.item.amount;
+    const updateTotalPrice = state.totalPrice - action.item.amount * action.item.price;
+    let updateItems 
+    let foundIndex = state.items.findIndex(item => item.id === action.item.id);
+    let foundItem = state.items[foundIndex];
+    if(foundItem.amount === action.item.amount){
+      updateItems = state.items.filter(item => item.id !== action.item.id)
+    }else{
+      updateItems = state.items.map(item => item.id === action.item.id ? {...item, amount: item.amount - action.item.amount} : item)
+    }
+    return {
+      items: updateItems,
+      totalAmount: updateTotalAmount,
+      totalPrice: updateTotalPrice
+    }
   }
 }
 const initCartState = {
@@ -49,8 +63,8 @@ export const CartContextProvider = props => {
     cartState.items.forEach(item => console.log(cartState.items))
   }
 
-  const removeItemHandler = id => {
-    cartDispatcher({type: 'REMOVE', id: id})
+  const removeItemHandler = item => {
+    cartDispatcher({type: 'REMOVE', item: item})
   }
 
   const Context = {

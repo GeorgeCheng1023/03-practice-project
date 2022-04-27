@@ -17,6 +17,12 @@ const Cart = props => {
   const addItemHandler = item => {
     return (cartContext.addItem({...item, amount:1}))
   }
+  const removeItemHandler = item => {
+    return (cartContext.removeItem({...item, amount:1}))
+  }
+  const removeAllItemHandler = item => {
+    return (cartContext.removeItem({...item}))
+  }
   return (
     <>
       {cartContext.isDisplay && (
@@ -30,6 +36,8 @@ const Cart = props => {
                 price={item.amount}
                 item={item}
                 onAdd={addItemHandler.bind(null, item)}
+                onRemove={removeItemHandler.bind(null, item)}
+                onRemoveAll={removeAllItemHandler.bind(null, item)}
               />
             )}
           </ul>
